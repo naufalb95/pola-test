@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 
 const Edit = (props) => {
   const [input, setInput] = useState({
+    id: 1,
     title: '',
     body: '',
     userId: 1
@@ -11,19 +11,7 @@ const Edit = (props) => {
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    try {
-      await axios('https://jsonplaceholder.typicode.com/posts', {
-        method: 'POST',
-        body: JSON.stringify({ ...input }),
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8'
-        }
-      });
-
-      props.submit(input);
-    } catch (err) {
-      console.log(err);
-    }
+    props.edit(input);
   };
 
   const inputHandler = (e) => {
@@ -35,9 +23,20 @@ const Edit = (props) => {
 
   return (
     <>
-      <div>Submit Post</div>
+      <div>Edit Post</div>
       <div>
         <form onSubmit={submitHandler}>
+          <div>
+            <label>Id</label>
+            <input
+              name="id"
+              id="id"
+              type="text"
+              value={input.id}
+              onChange={inputHandler}
+              placeholder="Give a id here"
+            />
+          </div>
           <div>
             <label>Title</label>
             <input

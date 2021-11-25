@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 
 const Create = (props) => {
   const [input, setInput] = useState({
@@ -11,19 +10,7 @@ const Create = (props) => {
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    try {
-      await axios('https://jsonplaceholder.typicode.com/posts', {
-        method: 'POST',
-        body: JSON.stringify({ ...input }),
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8'
-        }
-      });
-
-      props.submit(input);
-    } catch (err) {
-      console.log(err);
-    }
+    props.submit(input);
   };
 
   const inputHandler = (e) => {

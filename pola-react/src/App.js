@@ -1,5 +1,6 @@
 import './App.css';
 import Create from './views/Create';
+import Edit from './views/Edit';
 import Posts from './views/Posts';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -63,9 +64,32 @@ function App() {
     setPost([...newPost]);
   };
 
+  const edit = async (input) => {
+    await axios(`https://jsonplaceholder.typicode.com/posts/${input.id}`, {
+      method: 'PUT',
+      data: JSON.stringify({
+        ...input
+      }),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8'
+      }
+    });
+
+    const editPost = post.map((p) => {
+      if (p.id === input.id) {
+        p = { ...input };
+      }
+
+      return p;
+    });
+
+    setPost([...editPost]);
+  };
+
   return (
     <div className="App">
       <Create submit={submit} />
+      <Edit edit={edit} />
       <Posts post={post} delete={deleteHandler} />
     </div>
   );
